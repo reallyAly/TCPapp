@@ -4,17 +4,29 @@
  */
 package tcp.view;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tcp.controller.ClientController;
+import tcp.model.Client;
+
 /**
  *
  * @author alysson
  */
 public class ClientView extends javax.swing.JFrame {
+    
+    private ClientController clientController;
 
     /**
      * Creates new form ClientView
+     * @param clientController
      */
-    public ClientView() {
+    public ClientView(ClientController clientController) {
+        this.clientController = clientController;
         initComponents();
+        
+        this.idLabel.setText(clientController.getClient().getId());
     }
 
     /**
@@ -26,20 +38,13 @@ public class ClientView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        addressField1 = new javax.swing.JTextField();
         closeConnectionButton = new javax.swing.JButton();
         clientTitle = new javax.swing.JLabel();
         yourIdLabel = new javax.swing.JLabel();
         idLabel = new javax.swing.JLabel();
-        sentMessageButton1 = new javax.swing.JButton();
+        sentMessageButton = new javax.swing.JButton();
         messageField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-
-        addressField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressField1ActionPerformed(evt);
-            }
-        });
+        messageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,10 +62,10 @@ public class ClientView extends javax.swing.JFrame {
 
         idLabel.setText("######");
 
-        sentMessageButton1.setText("Sent Message");
-        sentMessageButton1.addActionListener(new java.awt.event.ActionListener() {
+        sentMessageButton.setText("Sent Message");
+        sentMessageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sentMessageButton1ActionPerformed(evt);
+                sentMessageButtonActionPerformed(evt);
             }
         });
 
@@ -70,7 +75,7 @@ public class ClientView extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Message:");
+        messageLabel.setText("Message:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,8 +95,8 @@ public class ClientView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(closeConnectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(sentMessageButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(sentMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(messageLabel, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(250, 250, 250))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(clientTitle)
@@ -107,13 +112,13 @@ public class ClientView extends javax.swing.JFrame {
                     .addComponent(yourIdLabel)
                     .addComponent(idLabel))
                 .addGap(58, 58, 58)
-                .addComponent(jLabel1)
+                .addComponent(messageLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(closeConnectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sentMessageButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sentMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(144, 144, 144))
         );
 
@@ -124,64 +129,33 @@ public class ClientView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_closeConnectionButtonActionPerformed
 
-    private void addressField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addressField1ActionPerformed
-
-    private void sentMessageButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sentMessageButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sentMessageButton1ActionPerformed
+    private void sentMessageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sentMessageButtonActionPerformed
+        
+        Client client = this.clientController.getClient();
+        
+        client.setMessage(this.messageField.getText());
+        
+        this.clientController.setClient(client);
+ 
+        try {
+            this.clientController.sentMessage();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sentMessageButtonActionPerformed
 
     private void messageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_messageFieldActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ClientView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressField1;
     private javax.swing.JLabel clientTitle;
     private javax.swing.JButton closeConnectionButton;
     private javax.swing.JLabel idLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField messageField;
-    private javax.swing.JButton sentMessageButton1;
+    private javax.swing.JLabel messageLabel;
+    private javax.swing.JButton sentMessageButton;
     private javax.swing.JLabel yourIdLabel;
     // End of variables declaration//GEN-END:variables
 }

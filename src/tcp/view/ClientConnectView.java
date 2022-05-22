@@ -122,6 +122,10 @@ public class ClientConnectView extends javax.swing.JFrame {
             client.setMessage(ClientConnectView.CONNECTION_FLAG);
 
             this.clientController.connectWithServer(client, address, port);
+            
+            new ClientView(this.clientController).setVisible(true);
+            
+            dispose();
 
         }catch(IOException e){
             System.out.println(e.getMessage());

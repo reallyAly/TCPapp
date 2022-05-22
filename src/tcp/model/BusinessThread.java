@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 /**
  *
  * @author alysson
@@ -17,27 +18,36 @@ import java.util.logging.Logger;
 public class BusinessThread extends Thread{
     
     private static ServerSocket server;
+    
     private static Socket connection;
     
     private static ObjectInputStream input;
-    private Client client;
 
-    public BusinessThread(Socket c) {
+    private int tableLine;
+    
+    private JTable table;
+
+    public BusinessThread(Socket c, JTable table, int tableLine) {
         connection = c;
+        this.table = table;
+        this.tableLine = tableLine;
     }
     
-    public Client getClient() {
-        return this.client;
-    }
-
     @Override
     public void run() {
          try {
              
-             input = new ObjectInputStream(connection.getInputStream());
+            while(true) {
+                
+                input = new ObjectInputStream(connection.getInputStream());
              
-             this.client = (Client) input.readObject();
-             
+                Client client = (Client) input.readObject();
+                
+                this.table.setValueAt(client.getName(), this.tableLine, 0);
+                this.table.setValueAt("Connected", this.tableLine, 1);
+                this.table.setValueAt(client.getMessage(), this.tableLine, 2);
+            } 
+
          } catch (IOException | ClassNotFoundException ex) {
              Logger.getLogger(BusinessThread.class.getName()).log(Level.SEVERE, null, ex);
          }
