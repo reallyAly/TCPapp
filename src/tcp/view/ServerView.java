@@ -5,6 +5,7 @@
 package tcp.view;
 
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import tcp.controller.ServerController;
 
 /**
@@ -20,6 +21,7 @@ public class ServerView extends javax.swing.JFrame {
     public ServerView() {
         this.myServer = new ServerController();
         initComponents();
+        this.statusLabel.setVisible(false);
     }
 
     /**
@@ -32,20 +34,21 @@ public class ServerView extends javax.swing.JFrame {
     private void initComponents() {
 
         portLabel = new javax.swing.JLabel();
-        statusButton = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         portField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         connectionsTable = new javax.swing.JTable();
+        statusLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         portLabel.setText("Port");
 
-        statusButton.setText("Start Server");
-        statusButton.addActionListener(new java.awt.event.ActionListener() {
+        startButton.setText("Start Server");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusButtonActionPerformed(evt);
+                startButtonActionPerformed(evt);
             }
         });
 
@@ -72,6 +75,10 @@ public class ServerView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(connectionsTable);
 
+        statusLabel.setFont(new java.awt.Font("Fira Sans", 0, 24)); // NOI18N
+        statusLabel.setForeground(new java.awt.Color(102, 255, 102));
+        statusLabel.setText("Waiting for requests...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,12 +87,18 @@ public class ServerView extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusButton))
-                    .addComponent(portLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(portLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(startButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(statusLabel))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 21, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,29 +107,38 @@ public class ServerView extends javax.swing.JFrame {
                 .addComponent(portLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusButton)
-                    .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(startButton)
+                    .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void statusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButtonActionPerformed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         
-        this.portField.disable();
-        
+        this.portField.setEnabled(false);
+        this.startButton.setEnabled(false);
+        this.statusLabel.setVisible(true);
         int port = Integer.parseInt(this.portField.getText());
         
         try {
             this.myServer.startServer(port, this.connectionsTable);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(this,
+                    "The server was started successfully",
+                    "Server Status",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Error trying start the server",
+                    JOptionPane.WARNING_MESSAGE);
         }
         
-    }//GEN-LAST:event_statusButtonActionPerformed
+    }//GEN-LAST:event_startButtonActionPerformed
 
     private void portFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_portFieldActionPerformed
         // TODO add your handling code here:
@@ -162,6 +184,7 @@ public class ServerView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField portField;
     private javax.swing.JLabel portLabel;
-    private javax.swing.JButton statusButton;
+    private javax.swing.JButton startButton;
+    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

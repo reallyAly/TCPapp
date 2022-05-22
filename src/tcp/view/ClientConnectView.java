@@ -6,6 +6,7 @@ package tcp.view;
 
 import java.io.IOException;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import tcp.controller.ClientController;
 import tcp.model.Client;
 
@@ -129,7 +130,10 @@ public class ClientConnectView extends javax.swing.JFrame {
             dispose();
 
         }catch(IOException e){
-            System.out.println(e.getMessage());
+             JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Error trying start the server",
+                    JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_connectButtonActionPerformed

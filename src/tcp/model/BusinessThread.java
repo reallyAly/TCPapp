@@ -47,6 +47,8 @@ public class BusinessThread extends Thread{
                 
                 if("HtI9AnsN&brq".equals(client.getMessage())) {
                     this.table.setValueAt("Disconnected", this.tableLine, 1);
+                    this.table.setValueAt("End", this.tableLine, 2);
+                   
                     break;
                 }
                 

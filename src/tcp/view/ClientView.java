@@ -7,6 +7,7 @@ package tcp.view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tcp.controller.ClientController;
 import tcp.model.Client;
 
@@ -156,8 +157,15 @@ public class ClientView extends javax.swing.JFrame {
  
         try {
             this.clientController.sentMessage();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                    "Message sent successfully",
+                    "Message Status",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+           JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Message Status",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_sentMessageButtonActionPerformed
 

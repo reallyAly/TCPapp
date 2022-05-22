@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.JTextField" name="addressField1">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addressField1ActionPerformed"/>
-      </Events>
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -45,9 +38,9 @@
                           <Group type="102" attributes="0">
                               <Component id="closeConnectionButton" min="-2" pref="123" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Component id="sentMessageButton1" min="-2" pref="123" max="-2" attributes="0"/>
+                              <Component id="sentMessageButton" min="-2" pref="123" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="messageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
                   </Group>
@@ -70,13 +63,13 @@
                   <Component id="idLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="messageLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="messageField" min="-2" pref="51" max="-2" attributes="0"/>
               <EmptySpace pref="70" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="closeConnectionButton" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="sentMessageButton1" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="sentMessageButton" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
           </Group>
@@ -110,12 +103,12 @@
         <Property name="text" type="java.lang.String" value="######"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="sentMessageButton1">
+    <Component class="javax.swing.JButton" name="sentMessageButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sent Message"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sentMessageButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sentMessageButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="messageField">
@@ -123,7 +116,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="messageFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="messageLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Message:"/>
       </Properties>
