@@ -18,8 +18,6 @@ public class ClientController {
 
     private Client client = null;
     
-    
-
     public Socket getConnection() {
         return connection;
     }

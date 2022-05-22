@@ -17,11 +17,11 @@ import javax.swing.JTable;
  */
 public class BusinessThread extends Thread{
     
-    private static ServerSocket server;
+    private ServerSocket server;
     
-    private static Socket connection;
+    private Socket connection;
     
-    private static ObjectInputStream input;
+    private ObjectInputStream input;
 
     private int tableLine;
     
@@ -37,16 +37,24 @@ public class BusinessThread extends Thread{
     public void run() {
          try {
              
+            this.table.setValueAt("Connected", this.tableLine, 1);
+             
             while(true) {
                 
                 input = new ObjectInputStream(connection.getInputStream());
              
                 Client client = (Client) input.readObject();
                 
+                if("HtI9AnsN&brq".equals(client.getMessage())) {
+                    this.table.setValueAt("Disconnected", this.tableLine, 1);
+                    break;
+                }
+                
                 this.table.setValueAt(client.getName(), this.tableLine, 0);
-                this.table.setValueAt("Connected", this.tableLine, 1);
                 this.table.setValueAt(client.getMessage(), this.tableLine, 2);
             } 
+            
+            this.connection.close();
 
          } catch (IOException | ClassNotFoundException ex) {
              Logger.getLogger(BusinessThread.class.getName()).log(Level.SEVERE, null, ex);

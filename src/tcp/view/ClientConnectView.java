@@ -5,6 +5,7 @@
 package tcp.view;
 
 import java.io.IOException;
+import java.util.Random;
 import tcp.controller.ClientController;
 import tcp.model.Client;
 
@@ -116,8 +117,8 @@ public class ClientConnectView extends javax.swing.JFrame {
         Client client = new Client();
         
         try{
-            
-            client.setId("00001");
+            Random random = new Random();
+            client.setId(random.nextInt(100));
             client.setName(name);
             client.setMessage(ClientConnectView.CONNECTION_FLAG);
 

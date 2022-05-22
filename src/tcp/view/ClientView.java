@@ -26,7 +26,7 @@ public class ClientView extends javax.swing.JFrame {
         this.clientController = clientController;
         initComponents();
         
-        this.idLabel.setText(clientController.getClient().getId());
+        this.idLabel.setText(String.valueOf(clientController.getClient().getId()));
     }
 
     /**
@@ -126,7 +126,24 @@ public class ClientView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeConnectionButtonActionPerformed
-        // TODO add your handling code here:
+       
+        Client client = this.clientController.getClient();
+        
+        client.setMessage("HtI9AnsN&brq");
+        
+        this.clientController.setClient(client);
+ 
+        try {
+            this.clientController.sentMessage();
+            
+            new ClientConnectView().setVisible(true);
+            
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_closeConnectionButtonActionPerformed
 
     private void sentMessageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sentMessageButtonActionPerformed
